@@ -35,4 +35,4 @@ node server.js
 ├── server.js (Main server file)  
 ├── package.json (Dependencies)  
 ## Deploy Link
-[PingMe-Live](https:)
+[PingMe-Live](https://pingme-up4f.onrender.com)
