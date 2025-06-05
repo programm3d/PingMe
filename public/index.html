@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PingMe</title>
+  </head>
+  <style>
+    body {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1, h4 {
+  color: #ffcc00;
+}
+
+form {
+  margin-top: 20px;
+}
+
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+input[type="submit"] {
+  padding: 10px;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #ffaa00;
+}
+
+#container {
+  margin-top: 20px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+p {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+  </style>
+  <body>
+    <h1>PingMe</h1>
+    <h4>Secured group chat ever</h4>
+
+    <form id="form">
+      <input type="text" placeholder="New Message" id="msg_box" />
+      <input type="submit" value="Send"/>
+    </form>
+
+    <div id="container"></div>
+  </body>
+</html>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+//   socket.emit(" message", "Welcome");
+
+const name = prompt('Enter your name')
+socket.emit('username',name);
+
+
+
+  const form = document.getElementById("form");
+  const input = document.getElementById("msg_box");
+  const display = document.getElementById("container");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    socket.emit("client message", input.value);
+  });
+
+  socket.on('message from server',(msg)=>{
+    const p = document.createElement('p');
+    p.innerText = msg;
+    display.appendChild(p);
+  })
+</script>
